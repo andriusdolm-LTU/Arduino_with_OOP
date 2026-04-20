@@ -1,6 +1,7 @@
 import patch
 from pyfirmata import Arduino, util
 from nustatymai import Projekto_Nustatymai
+from klausimai import uzduoti_klausimai
 import time
 
 class Tuscias_LED:
@@ -21,6 +22,7 @@ class LED:
 
 class Ismanus_Projektas(Projekto_Nustatymai):
     def __init__(self):
+        super().__init__()
         self.board = Arduino('COM5')
         self.mygtukas = self.board.get_pin('d:2:i') 
         self.potenciometras = self.board.get_pin('a:5:i')
@@ -30,6 +32,16 @@ class Ismanus_Projektas(Projekto_Nustatymai):
         self.gel_led = Tuscias_LED()
         self.raud_led = Tuscias_LED()
         
+    def keitimas_led_busenos(self, busena):
+        if busena:
+            self.zal_led.on()
+            self.gel_led.on()
+            self.raud_led.on()
+        else:
+            self.zal_led.off()
+            self.gel_led.off()
+            self.raud_led.off()
+
     def laukimas(self, sekundes = 0.01):
         pabaiga = time.time() + sekundes
         while time.time() < pabaiga:
@@ -53,21 +65,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                 return False
             time.sleep(0.01)
 
-
-    def klausimai(self):
-        while self.spalva is None:
-            self.spalva = input("Ar norite pajungti žalią, geltoną, raudoną ar visus tris LED? (z/g/r/v)\n")
-        while self.mirksejimas is None:
-            self.mirksejimas = input("Ar norite kad LED mirgsėtų ar ne? (t/n)\n")
-        if self.mirksejimas == 't':
-            while self.potenciometro_funkcija is None:
-                self.potenciometro_funkcija = input("Ar norite naudoti potenciometrą mirksėjimui ar ne? (1/2)\n")
-            if self.potenciometro_funkcija == '2':
-                while self.laikas is None:
-                    self.laikas = float(input("Kas kiek laiko norite, kad mirksėtų? (0.1s iki 10s)\n"))
-        if self.mirksejimas == 'n':
-            while self.mygtuko_funkcija is None:
-                self.mygtuko_funkcija = input("Ar norite junginėti LED su mygtuku ar tik ijungti? (1/2)\n")
+    def konfiguruoti_led(self):
         if self.spalva == 'z':
             self.zal_led = LED(self.board, 11)
         if self.spalva == 'g':
@@ -80,75 +78,53 @@ class Ismanus_Projektas(Projekto_Nustatymai):
             self.raud_led = LED(self.board, 9)
 
     def vykdymas_led(self):
+        if self.mirksejimas == 'n':
             if self.mygtuko_funkcija == '2':
-                print("Norint užbaigti paspauskite mygtuka")
+                print("LED įjungti. Norint užbaigti paspauskite mygtuką.")
                 while True:
                     if self.mygtukas.read() is True:
                         break
-                    self.zal_led.on()
-                    self.gel_led.on()
-                    self.raud_led.on()
-                    time.sleep(0.001)
+                    self.keitimas_led_busenos(1)
             elif self.mygtuko_funkcija == '1':
+                print("Valdykite mygtuku. Užbaigti: CTRL + C")
                 try:
-                    print("Norint užbaigti paspauskite CTRL + C")
                     while True:
                         if self.mygtukas.read() is True:
-                            self.zal_led.on()
-                            self.gel_led.on()
-                            self.raud_led.on()
+                            self.keitimas_led_busenos(1)
                         else:
-                            self.zal_led.off()
-                            self.gel_led.off()
-                            self.raud_led.off()
-                        time.sleep(0.01)
+                            self.keitimas_led_busenos(0)
                 except KeyboardInterrupt:
-                    print("Išjungta")
+                    pass
+        elif self.mirksejimas == 't':
             if self.potenciometro_funkcija == '2':
-                print("Norint užbaigti paspauskite mygtuka")
+                print(f"Mirksėjimas {self.laikas}sek. Norint užbaigti paspauskite mygtuką.")
                 while True:
-                    self.zal_led.on()
-                    self.gel_led.on()
-                    self.raud_led.on()
+                    self.keitimas_led_busenos(1)
                     if self.laukimas(self.laikas/2):
                         break
-                    self.zal_led.off()
-                    self.gel_led.off()
-                    self.raud_led.off()
+                    self.keitimas_led_busenos(0)
                     if self.laukimas(self.laikas/2):
                         break
             elif self.potenciometro_funkcija == '1':
-                print("Norint užbaigti paspauskite mygtuka")
+                print("Mirksėjimas (Potenciometras). Norint užbaigti paspauskite mygtuką.")
                 while True:
-                    if self.mygtukas.read() is True:
-                        break
-                    potenciometro_reiksme = self.potenciometras.read()
-                    while potenciometro_reiksme < 0.005:
-                        potenciometro_reiksme = self.potenciometras.read()
-                        self.zal_led.off()
-                        self.gel_led.off()
-                        self.raud_led.off()
-                    self.zal_led.on()
-                    self.gel_led.on()
-                    self.raud_led.on()
+                    if self.potenciometras.read() < 0.01:
+                        self.keitimas_led_busenos(1)
+                    self.keitimas_led_busenos(1)
                     if self.laukimas_su_potenciometru():
                         break
-                    self.zal_led.off()
-                    self.gel_led.off()
-                    self.raud_led.off()
+                    self.keitimas_led_busenos(0)
                     if self.laukimas_su_potenciometru():
                         break
-                    time.sleep(0.01)
-
 
     def baigimas(self):
         print("Išjungiami visi LED ir uždaroma jungtis")
-        for i in range(7,14):
-            self.board.digital[i].write(0)
+        self.keitimas_led_busenos(0)
         self.board.exit()    
 
 if __name__ == "__main__":
     projektas = Ismanus_Projektas()
-    projektas.klausimai()
+    uzduoti_klausimai(projektas)
+    projektas.konfiguruoti_led()
     projektas.vykdymas_led()
     projektas.baigimas()
