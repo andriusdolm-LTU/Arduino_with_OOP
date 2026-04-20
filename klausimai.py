@@ -12,3 +12,6 @@ def uzduoti_klausimai(projektas):
     if projektas.mirksejimas == 'n':
         while projektas.mygtuko_funkcija is None:
             projektas.mygtuko_funkcija = input("Ar norite junginėti LED su mygtuku ar tik ijungti? (1/2)\n")
+        if projektas.mygtuko_funkcija == '2':
+            while projektas. potenciometro_ryskumas is None:
+                projektas.potenciometro_ryskumas = input("Ar nori valdyti LED ryškumą su potenciometru? (t/n)\n")

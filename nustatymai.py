@@ -7,6 +7,7 @@ class Projekto_Nustatymai:
         self._potenciometro_funkcija = None
         self._laikas = None
         self._mygtuko_funkcija = None
+        self._potenciometro_ryskumas = None
 
     @property
     def spalva(self):
@@ -79,4 +80,19 @@ class Projekto_Nustatymai:
         else:
             print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
             self._mygtuko_funkcija = None
+            time.sleep(2)
+
+    @property
+    def potenciometro_ryskumas(self):
+        return self._potenciometro_ryskumas
+    
+    @potenciometro_ryskumas.setter
+    def potenciometro_ryskumas(self, value):
+        sutvarkytas_value = value.lower().strip()
+        leistinas = ['t', 'n']
+        if sutvarkytas_value in leistinas:
+            self._potenciometro_ryskumas = sutvarkytas_value
+        else:
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            self._potenciometro_ryskumas = None
             time.sleep(2)

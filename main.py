@@ -10,14 +10,19 @@ class Tuscias_LED:
     
 
 class LED:
-    def __init__(self, board, pin):
-        self.pin = board.get_pin(f'd:{pin}:o')
+    def __init__(self, board, pin, ryskumas = 1):
+        self.pin = board.get_pin(f'd:{pin}:p')
+        self.ryskumas = ryskumas
 
     def on(self):
-        self.pin.write(1)
+        self.pin.write(self.ryskumas)
 
     def off(self):
         self.pin.write(0)
+
+    def led_ryskumas(self,naujas_ryskumas):
+        self.ryskumas = naujas_ryskumas
+        self.pin.write(self.ryskumas)
     
 
 class Ismanus_Projektas(Projekto_Nustatymai):
@@ -80,11 +85,23 @@ class Ismanus_Projektas(Projekto_Nustatymai):
     def vykdymas_led(self):
         if self.mirksejimas == 'n':
             if self.mygtuko_funkcija == '2':
-                print("LED įjungti. Norint užbaigti paspauskite mygtuką.")
-                while True:
-                    if self.mygtukas.read() is True:
-                        break
-                    self.keitimas_led_busenos(1)
+                if self.potenciometro_ryskumas == 'n':
+                    print("LED įjungti. Norint užbaigti paspauskite mygtuką.")
+                    while True:
+                        if self.mygtukas.read() is True:
+                            break
+                        self.keitimas_led_busenos(1)
+                elif self.potenciometro_ryskumas == 't':
+                    print("LED įjungti, keisti su potenciometru ryskumą. Norint užbaigti paspauskite mygtuką.")
+                    while True:
+                        if self.mygtukas.read() is True:
+                            break
+                        ryskumas = self.potenciometras.read()
+                        self.zal_led.led_ryskumas(ryskumas)
+                        self.gel_led.led_ryskumas(ryskumas)
+                        self.raud_led.led_ryskumas(ryskumas)
+                        time.sleep(0.01)
+
             elif self.mygtuko_funkcija == '1':
                 print("Valdykite mygtuku. Užbaigti: CTRL + C")
                 try:
