@@ -1,8 +1,9 @@
+import time
 import patch
 from pyfirmata import Arduino, util
 from nustatymai import Projekto_Nustatymai
 from klausimai import uzduoti_klausimai
-import time
+
 
 class Tuscias_LED:
     def on(self): pass
@@ -10,7 +11,7 @@ class Tuscias_LED:
     
 
 class LED:
-    def __init__(self, board, pin, ryskumas = 1):
+    def __init__(self, board, pin, ryskumas=1):
         self.pin = board.get_pin(f'd:{pin}:p')
         self.ryskumas = ryskumas
 
@@ -20,22 +21,37 @@ class LED:
     def off(self):
         self.pin.write(0)
 
-    def led_ryskumas(self,naujas_ryskumas):
+    def led_ryskumas(self, naujas_ryskumas):
         self.ryskumas = naujas_ryskumas
         self.pin.write(self.ryskumas)
     
 
 class Ismanus_Projektas(Projekto_Nustatymai):
+    _egzempliorius = None
+
+    def __new__(cls):
+        if cls._egzempliorius is None:
+            cls._egzempliorius = super(Ismanus_Projektas, cls).__new__(cls)
+            cls._inicijuota = False
+        return cls._egzempliorius
+
     def __init__(self):
+        if self._inicijuota:
+            return
         super().__init__()
-        self.board = Arduino('COM5')
-        self.mygtukas = self.board.get_pin('d:2:i') 
-        self.potenciometras = self.board.get_pin('a:5:i')
-        it = util.Iterator(self.board)
-        it.start()
-        self.zal_led = Tuscias_LED()
-        self.gel_led = Tuscias_LED()
-        self.raud_led = Tuscias_LED()
+        try:
+            self.board = Arduino('COM5')
+            self.mygtukas = self.board.get_pin('d:2:i')
+            self.potenciometras = self.board.get_pin('a:5:i')
+            it = util.Iterator(self.board)
+            it.start()
+            self.zal_led = Tuscias_LED()
+            self.gel_led = Tuscias_LED()
+            self.raud_led = Tuscias_LED()
+            self._inicijuota = True
+            print("Sėkmingai prisijungta prie Arduino (Singleton).")
+        except Exception as problema:
+            print(f"Klaida jungiantis prie Arduino: {problema}")
         
     def keitimas_led_busenos(self, busena):
         if busena:
@@ -47,7 +63,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
             self.gel_led.off()
             self.raud_led.off()
 
-    def laukimas(self, sekundes = 0.01):
+    def laukimas(self, sekundes=0.01):
         pabaiga = time.time() + sekundes
         while time.time() < pabaiga:
             if self.mygtukas.read() is True:
@@ -62,7 +78,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                 return True
             potenciometro_reiksme = self.potenciometras.read()
             if potenciometro_reiksme is None:
-                potenciometro_reiksmereiksme = 0.5
+                potenciometro_reiksmereiksme=0.5
             limitas = potenciometro_reiksme * 10
             print(potenciometro_reiksme*10)
             praejo = time.time() - pradzia
@@ -92,7 +108,8 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                             break
                         self.keitimas_led_busenos(1)
                 elif self.potenciometro_ryskumas == 't':
-                    print("LED įjungti, keisti su potenciometru ryskumą. Norint užbaigti paspauskite mygtuką.")
+                    print("LED įjungti, keisti su potenciometru ryskumą." \
+                    "Norint užbaigti paspauskite mygtuką.")
                     while True:
                         if self.mygtukas.read() is True:
                             break
@@ -138,6 +155,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
         print("Išjungiami visi LED ir uždaroma jungtis")
         self.keitimas_led_busenos(0)
         self.board.exit()    
+
 
 if __name__ == "__main__":
     projektas = Ismanus_Projektas()
