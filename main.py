@@ -12,18 +12,18 @@ class Tuscias_LED:
 
 class LED:
     def __init__(self, board, pin, ryskumas=1):
-        self.pin = board.get_pin(f'd:{pin}:p')
+        self._pin = board.get_pin(f'd:{pin}:p')
         self.ryskumas = ryskumas
 
     def on(self):
-        self.pin.write(self.ryskumas)
+        self._pin.write(self.ryskumas)
 
     def off(self):
-        self.pin.write(0)
+        self._pin.write(0)
 
     def led_ryskumas(self, naujas_ryskumas):
         self.ryskumas = naujas_ryskumas
-        self.pin.write(self.ryskumas)
+        self._pin.write(self.ryskumas)
     
 
 class Ismanus_Projektas(Projekto_Nustatymai):
@@ -79,8 +79,8 @@ class Ismanus_Projektas(Projekto_Nustatymai):
             potenciometro_reiksme = self.potenciometras.read()
             if potenciometro_reiksme is None:
                 potenciometro_reiksmereiksme=0.5
-            limitas = potenciometro_reiksme * 10
-            print(potenciometro_reiksme*10)
+            limitas = (potenciometro_reiksme * 10)/2
+            print(f"{potenciometro_reiksme*10:.1f}")
             praejo = time.time() - pradzia
             if praejo >= limitas:
                 return False
@@ -108,7 +108,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                             break
                         self.keitimas_led_busenos(1)
                 elif self.potenciometro_ryskumas == 't':
-                    print("LED įjungti, keisti su potenciometru ryskumą." \
+                    print("LED įjungti, keisti su potenciometru ryskumą. " \
                     "Norint užbaigti paspauskite mygtuką.")
                     while True:
                         if self.mygtukas.read() is True:
@@ -131,7 +131,8 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                     pass
         elif self.mirksejimas == 't':
             if self.potenciometro_funkcija == '2':
-                print(f"Mirksėjimas {self.laikas}sek. Norint užbaigti paspauskite mygtuką.")
+                print(f"Mirksėjimas {self.laikas}sek. " \
+                      "Norint užbaigti paspauskite mygtuką.")
                 while True:
                     self.keitimas_led_busenos(1)
                     if self.laukimas(self.laikas/2):
@@ -140,7 +141,8 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                     if self.laukimas(self.laikas/2):
                         break
             elif self.potenciometro_funkcija == '1':
-                print("Mirksėjimas (Potenciometras). Norint užbaigti paspauskite mygtuką.")
+                print("Mirksėjimas (Potenciometras). " \
+                      "Norint užbaigti paspauskite mygtuką.")
                 while True:
                     if self.potenciometras.read() < 0.01:
                         self.keitimas_led_busenos(1)
