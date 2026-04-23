@@ -1,4 +1,5 @@
 import time
+import json
 
 class Projekto_Nustatymai:
     def __init__(self):
@@ -96,3 +97,49 @@ class Projekto_Nustatymai:
             print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
             self._potenciometro_ryskumas = None
             time.sleep(2)
+
+    def issaugoti_nustatymus(self):
+        duomenys = {
+            "spalva": self.spalva,
+            "mirksejimas": self.mirksejimas,
+            "potenciometro funkcija": self.potenciometro_funkcija,
+            "laikas": self.laikas,
+            "mygtuko funkcija": self.mygtuko_funkcija,
+            "potenciometro ryskumas": self.potenciometro_ryskumas
+        }
+        with open("nustatymai.json", "w") as f:
+            json.dump(duomenys, f, indent=4)
+        print("Nustatymai sėkmingai išsaugoti į nustatymai.json!")
+
+    def uzkrauti_nustatymus(self):
+        pasirinkimas = (
+            input("Ar nori pradeti su senais nustatymais " \
+                  "ar sukurti naujus? (1/2)\n")
+        )
+        if pasirinkimas == '1':
+            try:
+                with open("nustatymai.json", "r", encoding="utf-8") as f:
+                    duomenys = json.load(f)
+                    if duomenys.get("spalva"):
+                        self.spalva = duomenys.get("spalva")
+                    if duomenys.get("mirksejimas"):
+                        self.mirksejimas = duomenys.get("mirksejimas")
+                    if duomenys.get("potenciometro funkcija"):
+                        self.potenciometro_funkcija = (
+                            duomenys.get("potenciometro funkcija")
+                        )
+                    if duomenys.get("laikas"):
+                        self.laikas = duomenys.get("laikas")
+                    if duomenys.get("mygtuko funkcija"):
+                        self.mygtuko_funkcija = (
+                            duomenys.get("mygtuko funkcija")
+                        )
+                    if duomenys.get("potenciometro ryskumas"):
+                        self.potenciometro_ryskumas = (
+                            duomenys.get("potenciometro ryskumas")
+                        )
+                    print("Nustatymai užkrauti iš failo.")
+            except (FileNotFoundError, json.JSONDecodeError):
+                print("Išsaugotų nustatymų nerasta, kuriamas naujas.")
+        else:
+            pass

@@ -107,6 +107,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                         if self.mygtukas.read() is True:
                             break
                         self.keitimas_led_busenos(1)
+                        time.sleep(0.01)
                 elif self.potenciometro_ryskumas == 't':
                     print("LED įjungti, keisti su potenciometru ryskumą. " \
                     "Norint užbaigti paspauskite mygtuką.")
@@ -127,6 +128,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                             self.keitimas_led_busenos(1)
                         else:
                             self.keitimas_led_busenos(0)
+                        time.sleep(0.01)
                 except KeyboardInterrupt:
                     pass
         elif self.mirksejimas == 't':
@@ -161,7 +163,9 @@ class Ismanus_Projektas(Projekto_Nustatymai):
 
 if __name__ == "__main__":
     projektas = Ismanus_Projektas()
+    projektas.uzkrauti_nustatymus()
     uzduoti_klausimai(projektas)
     projektas.konfiguruoti_led()
     projektas.vykdymas_led()
     projektas.baigimas()
+    projektas.issaugoti_nustatymus()
