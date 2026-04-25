@@ -8,6 +8,7 @@ from klausimai import uzduoti_klausimai
 class Tuscias_LED:
     def on(self): pass
     def off(self): pass
+    def led_ryskumas(self, ryskumas): pass
     
 
 class LED:

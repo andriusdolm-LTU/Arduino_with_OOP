@@ -1,8 +1,8 @@
 {
-    "spalva": "v",
-    "mirksejimas": "t",
-    "potenciometro funkcija": "2",
-    "laikas": 1.0,
-    "mygtuko funkcija": null,
-    "potenciometro ryskumas": null
+    "spalva": "g",
+    "mirksejimas": "n",
+    "potenciometro funkcija": null,
+    "laikas": null,
+    "mygtuko funkcija": "2",
+    "potenciometro ryskumas": "t"
 }

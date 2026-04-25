@@ -29,7 +29,7 @@ c) Prijungti potenciometrą prie pin A5
 
 ## 4. Būtini failai, kuriuos reikia įsirašyti, kad veiktų projektas
 
-1. [main.py](./main.py)
+1. [OOP_Arduino.py](./OOP_Arduino.py)
 
 2. [klausimai.py](./klausimai.py)
 
