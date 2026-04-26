@@ -81,8 +81,4 @@ Metodas `uzkrauti_nustatymus()` yra iškviečiamas pradžioje veikimo, kad patik
 
 Kadangi šis projektas nėra tik apie objektinį programavimą, buvo sunku išmokti ir susieti Arduino funkcijas su python kodu. Taip pat keičiant kodą atsirasdavo klaidų, kurias reikėdavo testuoti per naujo ar taisyti.
 
-Šis projektas galėtų labai lengvai išsiplėsti į milžinišką projektą pridedant daugiau LED, daugiau sensorių ir kitų valdymo būtų. Taip pat galima būtų buve sukurti žaidimą, kuris paleistu visus LED iš eilės ir su mygtuku susdabdyti ant žalio LED.
-
-
-## Atliko:  
-Andrius Dolmantas, EF 25/2
+Šis projektas galėtų labai lengvai išsiplėsti į milžinišką projektą pridedant daugiau LED, daugiau sensorių ir kitų valdymo būdų. Taip pat galima būtų buve sukurti žaidimą, kuris paleistu visus LED iš eilės ir su mygtuku sustabdyti ant žalio LED.
