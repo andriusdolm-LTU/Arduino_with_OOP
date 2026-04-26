@@ -37,3 +37,5 @@ c) Prijungti potenciometrą prie pin A5
 
 4. [patch.py](./patch.py)
 
+5. [nustatymai.json](./nustatymai.json)
+
