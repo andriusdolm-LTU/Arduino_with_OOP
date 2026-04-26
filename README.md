@@ -66,6 +66,8 @@ Klasė `Ismanus_Projektas` yra glaudžiai susieta su failo *nustatymai.py* duome
 
 Kode yra naudojama testavimo funkcijos norint patikrinti ar visi kintamieji kurie atsiranda iš klausimų yra teisingai enkapsuliuoti. Taip pat atliktas testas patikrinti singleton veikimą ir LED būsenas.
 
+<img width="2136" height="149" alt="Screenshot 2026-04-26 125249" src="https://github.com/user-attachments/assets/d4c778b9-ca58-4d76-bdce-b3cbfed504e6" />
+
 ## Failų išsaugojimas ir jų skaitymas
 
 Metodas `uzkrauti_nustatymus()` yra iškviečiamas pradžioje veikimo, kad patikrinti ar failas *nustatymai.json* egzistuoja. Jei ne prasideda klausimai, o jei egzistuoja ir paleidžiamas jis nuskaito failo informacija ir priskirai juos kintamiesiems. Moetodas `issaugoti_nustatymus()` užtikrina, kad nustatyti duomenys atitiktų enkapsuliacija ir būtų išsaugotas i *nustatymai.json* failą.
