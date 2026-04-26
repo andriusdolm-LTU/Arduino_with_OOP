@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from main import Ismanus_Projektas, LED
+from OOP_Arduino import Ismanus_Projektas, LED
 
 def test_singleton():
     p1 = Ismanus_Projektas()

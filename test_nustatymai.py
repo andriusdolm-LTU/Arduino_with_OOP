@@ -86,3 +86,14 @@ def test_potenciometro_ryskumas_setter_klaidinga(nustatymai):
     nustatymai.potenciometro_ryskumas = " Ne "
     assert nustatymai.potenciometro_ryskumas is None
     
+def test_pasirinkimas_duomenu_teisinga(nustatymai):
+    nustatymai.mygtuko_funkcija = " 1 "
+    assert nustatymai.mygtuko_funkcija == "1"
+    nustatymai.mygtuko_funkcija = " 2 "
+    assert nustatymai.mygtuko_funkcija == "2"
+
+def test_pasirinkimas_duomenu_klaidinga(nustatymai):
+    nustatymai.mygtuko_funkcija = " Taip "
+    assert nustatymai.mygtuko_funkcija is None
+    nustatymai.mygtuko_funkcija = " Ne "
+    assert nustatymai.mygtuko_funkcija is None

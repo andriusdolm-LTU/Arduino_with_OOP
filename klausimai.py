@@ -16,10 +16,16 @@ def uzduoti_klausimai(projektas):
             )
         if projektas.potenciometro_funkcija == '2':
             while projektas.laikas is None:
-                projektas.laikas = (
-                    float(input("Kas kiek laiko norite, " \
-                                "kad mirksėtų? (0.1s iki 10s)\n"))
-                )
+                    laikinas_laikas = (
+                        input("Kas kiek laiko norite, " \
+                                    "kad mirksėtų? (0.1s iki 10s)\n")
+                    )
+                    try:
+                        skaicius = float(laikinas_laikas)
+                        projektas.laikas = skaicius
+                    except ValueError:
+                        print("Neteisingai pasirinkas atsakymas.")
+
     if projektas.mirksejimas == 'n':
         while projektas.mygtuko_funkcija is None:
             projektas.mygtuko_funkcija = (

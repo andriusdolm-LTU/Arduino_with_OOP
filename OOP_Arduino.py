@@ -134,7 +134,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                     pass
         elif self.mirksejimas == 't':
             if self.potenciometro_funkcija == '2':
-                print(f"Mirksėjimas {self.laikas}sek. " \
+                print(f"Mirksėjimas {self.laikas} sek. " \
                       "Norint užbaigti paspauskite mygtuką.")
                 while True:
                     self.keitimas_led_busenos(1)

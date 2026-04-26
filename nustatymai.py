@@ -9,6 +9,7 @@ class Projekto_Nustatymai:
         self._laikas = None
         self._mygtuko_funkcija = None
         self._potenciometro_ryskumas = None
+        self._pasirinkimas = None
 
     @property
     def spalva(self):
@@ -98,6 +99,21 @@ class Projekto_Nustatymai:
             self._potenciometro_ryskumas = None
             time.sleep(2)
 
+    @property
+    def pasirinkimas(self):
+        return self._pasirinkimas
+    
+    @pasirinkimas.setter
+    def pasirinkimas(self, value):
+        sutvarkytas_value = value.strip()
+        leistinas = ['1', '2']
+        if sutvarkytas_value in leistinas:
+            self._pasirinkimas = sutvarkytas_value
+        else:
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            self._pasirinkimas = None
+            time.sleep(2)
+
     def issaugoti_nustatymus(self):
         duomenys = {
             "spalva": self.spalva,
@@ -112,11 +128,12 @@ class Projekto_Nustatymai:
         print("Nustatymai sėkmingai išsaugoti į nustatymai.json!")
 
     def uzkrauti_nustatymus(self):
-        pasirinkimas = (
+        while self.pasirinkimas is None:
+            self.pasirinkimas = (
             input("Ar nori pradeti su senais nustatymais " \
                   "ar sukurti naujus? (1/2)\n")
         )
-        if pasirinkimas == '1':
+        if self.pasirinkimas == '1':
             try:
                 with open("nustatymai.json", "r", encoding="utf-8") as f:
                     duomenys = json.load(f)
