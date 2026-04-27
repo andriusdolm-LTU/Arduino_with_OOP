@@ -110,7 +110,7 @@ class Ismanus_Projektas(Projekto_Nustatymai):
                         self.keitimas_led_busenos(1)
                         time.sleep(0.01)
                 elif self.potenciometro_ryskumas == 't':
-                    print("LED įjungti, keisti su potenciometru ryskumą. " \
+                    print("LED įjungti, keisti su potenciometru ryškumą. " \
                     "Norint užbaigti paspauskite mygtuką.")
                     while True:
                         if self.mygtukas.read() is True:

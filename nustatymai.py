@@ -22,7 +22,7 @@ class Projekto_Nustatymai:
         if sutvarkyta_value in leistinas:
             self._spalva = sutvarkyta_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._spalva = None
             time.sleep(2)
     
@@ -37,7 +37,7 @@ class Projekto_Nustatymai:
         if sutvarkytas_value in leistinas:
             self._mirksejimas = sutvarkytas_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._mirksejimas = None
             time.sleep(2)
 
@@ -52,7 +52,7 @@ class Projekto_Nustatymai:
         if sutvarkytas_value in leistinas:
             self._potenciometro_funkcija = sutvarkytas_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._potenciometro_funkcija = None
             time.sleep(2)
 
@@ -65,7 +65,7 @@ class Projekto_Nustatymai:
         if value >= 0.1 and value <=10:
             self._laikas = value
         else:
-            print("Negalima pasirinkti tokio laiko")
+            print("Negalima pasirinkti tokio laiko!")
             self._laikas = None
             time.sleep(2)
 
@@ -80,7 +80,7 @@ class Projekto_Nustatymai:
         if sutvarkytas_value in leistinas:
             self._mygtuko_funkcija = sutvarkytas_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._mygtuko_funkcija = None
             time.sleep(2)
 
@@ -95,7 +95,7 @@ class Projekto_Nustatymai:
         if sutvarkytas_value in leistinas:
             self._potenciometro_ryskumas = sutvarkytas_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._potenciometro_ryskumas = None
             time.sleep(2)
 
@@ -110,7 +110,7 @@ class Projekto_Nustatymai:
         if sutvarkytas_value in leistinas:
             self._pasirinkimas = sutvarkytas_value
         else:
-            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo")
+            print("Neteisingai įvestas atsakymas arba nėra tokio pasirinkimo!")
             self._pasirinkimas = None
             time.sleep(2)
 

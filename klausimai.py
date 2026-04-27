@@ -24,7 +24,7 @@ def uzduoti_klausimai(projektas):
                         skaicius = float(laikinas_laikas)
                         projektas.laikas = skaicius
                     except ValueError:
-                        print("Neteisingai pasirinkas atsakymas.")
+                        print("Neteisingai pasirinkas atsakymas!")
 
     if projektas.mirksejimas == 'n':
         while projektas.mygtuko_funkcija is None:
@@ -35,6 +35,6 @@ def uzduoti_klausimai(projektas):
         if projektas.mygtuko_funkcija == '2':
             while projektas. potenciometro_ryskumas is None:
                 projektas.potenciometro_ryskumas = (
-                    input("Ar nori valdyti LED ryškumą su " \
+                    input("Ar norite valdyti LED ryškumą su " \
                           "potenciometru? (t/n)\n")
                 )
